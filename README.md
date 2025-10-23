@@ -5,6 +5,36 @@ Repository to house various jscom terraform modules.
 
 ## Modules
 
+### lambda-authorizer
+
+This module creates a Lambda-based authorizer for API Gateway v2 (HTTP API) that validates API keys. Use this to protect admin or sensitive endpoints with header-based authentication.
+
+**[Full Documentation](./modules/lambda-authorizer/README.md)**
+
+Example Usage:
+```hcl
+module "admin_authorizer" {
+  source = "git::https://github.com/johnsosoka/jscom-tf-modules.git//modules/lambda-authorizer?ref=main"
+
+  function_name              = "my-api-admin-authorizer"
+  api_gateway_id             = module.api_gateway.api_gateway_id
+  api_gateway_execution_arn  = module.api_gateway.api_gateway_execution_arn
+  admin_api_key_value        = var.admin_api_key
+
+  project_name = "my-project"
+}
+
+# Use the authorizer on a protected route
+resource "aws_apigatewayv2_route" "admin_route" {
+  api_id    = module.api_gateway.api_gateway_id
+  route_key = "GET /admin/stats"
+  target    = "integrations/${aws_apigatewayv2_integration.admin.id}"
+
+  authorization_type = "CUSTOM"
+  authorizer_id      = module.admin_authorizer.authorizer_id
+}
+```
+
 ### static-website
 
 This module creates a static website hosted on S3 with CloudFront in front of it.
