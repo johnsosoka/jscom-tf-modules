@@ -66,3 +66,45 @@ variable "project_name" {
   type        = string
   default     = "web-holding"
 }
+
+# API Gateway variables
+
+variable "create_api_gateway" {
+  description = "Create API Gateway instance for this domain"
+  type        = bool
+  default     = false
+}
+
+variable "api_gateway_name" {
+  description = "Name for the API Gateway (defaults to {project_name}-api)"
+  type        = string
+  default     = ""
+}
+
+variable "api_gateway_description" {
+  description = "Description for the API Gateway"
+  type        = string
+  default     = "API Gateway"
+}
+
+variable "api_custom_domain_name" {
+  description = "Custom domain for API Gateway (defaults to api.{domain_name})"
+  type        = string
+  default     = ""
+}
+
+variable "cors_configuration" {
+  description = "CORS configuration for API Gateway"
+  type        = map(any)
+  default = {
+    allow_headers = ["*"]
+    allow_methods = ["*"]
+    allow_origins = ["*"]
+  }
+}
+
+variable "api_access_log_format" {
+  description = "Format for API Gateway access logs"
+  type        = string
+  default     = "$context.identity.sourceIp - - [$context.requestTime] \"$context.httpMethod $context.routeKey $context.protocol\" $context.status $context.responseLength $context.requestId $context.integrationErrorMessage"
+}
