@@ -51,7 +51,7 @@ resource "aws_acm_certificate_validation" "global" {
 
 # Regional Certificate (for regional services like ALB, API Gateway)
 resource "aws_acm_certificate" "regional" {
-  count = var.create_regional_cert ? 1 : 0
+  count = local.should_create_regional_cert ? 1 : 0
 
   domain_name               = "*.${var.domain_name}"
   subject_alternative_names = [var.domain_name]
@@ -72,7 +72,7 @@ resource "aws_acm_certificate" "regional" {
 
 # DNS validation records for regional certificate
 resource "aws_route53_record" "regional_cert_validation" {
-  for_each = var.create_regional_cert ? {
+  for_each = local.should_create_regional_cert ? {
     for dvo in aws_acm_certificate.regional[0].domain_validation_options : dvo.domain_name => {
       name   = dvo.resource_record_name
       record = dvo.resource_record_value
@@ -90,7 +90,7 @@ resource "aws_route53_record" "regional_cert_validation" {
 
 # Certificate validation for regional cert
 resource "aws_acm_certificate_validation" "regional" {
-  count = var.create_regional_cert ? 1 : 0
+  count = local.should_create_regional_cert ? 1 : 0
 
   certificate_arn         = aws_acm_certificate.regional[0].arn
   validation_record_fqdns = [for record in aws_route53_record.regional_cert_validation : record.fqdn]

@@ -25,12 +25,12 @@ output "global_cert_status" {
 
 output "regional_cert_arn" {
   description = "ARN of the regional ACM certificate"
-  value       = var.create_regional_cert ? aws_acm_certificate.regional[0].arn : null
+  value       = local.should_create_regional_cert ? aws_acm_certificate.regional[0].arn : null
 }
 
 output "regional_cert_status" {
   description = "Status of the regional certificate validation"
-  value       = var.create_regional_cert ? aws_acm_certificate.regional[0].status : null
+  value       = local.should_create_regional_cert ? aws_acm_certificate.regional[0].status : null
 }
 
 output "ses_identity_arn" {
@@ -46,4 +46,31 @@ output "ses_verification_token" {
 output "email_provider" {
   description = "The configured email provider"
   value       = var.email_provider
+}
+
+# API Gateway outputs
+
+output "api_gateway_id" {
+  description = "ID of the API Gateway (if created)"
+  value       = var.create_api_gateway ? module.api[0].api_gateway_id : null
+}
+
+output "api_gateway_execution_arn" {
+  description = "Execution ARN of the API Gateway (if created)"
+  value       = var.create_api_gateway ? module.api[0].api_gateway_execution_arn : null
+}
+
+output "api_custom_domain_name" {
+  description = "Custom domain name for the API Gateway (if created)"
+  value       = var.create_api_gateway ? module.api[0].custom_domain_name : null
+}
+
+output "api_custom_domain_target" {
+  description = "Target domain for the API Gateway (if created)"
+  value       = var.create_api_gateway ? module.api[0].custom_domain_name_target : null
+}
+
+output "api_custom_domain_hosted_zone_id" {
+  description = "Hosted zone ID for the API Gateway custom domain (if created)"
+  value       = var.create_api_gateway ? module.api[0].custom_domain_hosted_zone_id : null
 }
