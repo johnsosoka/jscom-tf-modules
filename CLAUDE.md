@@ -29,6 +29,7 @@ jscom-tf-modules/
 ├── LICENSE
 └── modules/
     ├── base-api/          # API Gateway v2 with custom domain
+    ├── codeartifact-pypi/ # AWS CodeArtifact PyPI repository
     ├── lambda-authorizer/ # API key-based Lambda authorizer
     ├── static-website/    # S3 + CloudFront static hosting
     └── web-holding/       # Complete domain infrastructure setup
@@ -47,6 +48,18 @@ Creates API Gateway v2 (HTTP API) with custom domain, Route53 DNS, and CloudWatc
 - No integrations included (added by consumers)
 
 **Common Usage**: Serverless API backends, webhook receivers, microservices
+
+#### codeartifact-pypi
+AWS CodeArtifact domain and PyPI repository for hosting private Python packages and proxying public PyPI packages.
+
+**Key Features**:
+- Private PyPI repository for internal packages
+- External connection to public PyPI for caching/proxying
+- IAM-based authentication with temporary tokens
+- VPC endpoint support for private access
+- Outputs include pip configuration instructions
+
+**Common Usage**: Private Python package hosting, internal libraries, caching public packages, air-gapped environments
 
 #### lambda-authorizer
 Lambda-based API Gateway v2 REQUEST authorizer for API key validation via HTTP headers.
