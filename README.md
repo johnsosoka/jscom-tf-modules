@@ -155,7 +155,7 @@ output "test_route_endpoint" {
 ```
 
 **Test Lambda**
-    
+
 ```javascript
 // test.js
 exports.handler = async (event) => {
@@ -166,3 +166,36 @@ exports.handler = async (event) => {
     };
 };
 ```
+
+### codeartifact-pypi
+
+This module creates an AWS CodeArtifact domain and PyPI repository for hosting private Python packages and proxying public PyPI packages.
+
+**[Full Documentation](./modules/codeartifact-pypi/README.md)**
+
+Example Usage:
+```hcl
+module "pypi_repo" {
+  source = "git::https://github.com/johnsosoka/jscom-tf-modules.git//modules/codeartifact-pypi?ref=main"
+
+  domain_name     = "johnsosoka"
+  repository_name = "pypi"
+
+  tags = {
+    Project     = "jscom-infrastructure"
+    Environment = "production"
+  }
+}
+
+# Output pip configuration instructions
+output "pip_setup" {
+  value = module.pypi_repo.pip_config_instructions
+}
+```
+
+**Key Features:**
+- Private PyPI repository for internal packages
+- External connection to public PyPI for caching/proxying packages
+- IAM-based authentication with temporary tokens
+- Comprehensive pip configuration instructions in outputs
+- VPC endpoint support for private network access
