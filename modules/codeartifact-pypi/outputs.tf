@@ -27,7 +27,7 @@ output "repository_arn" {
 
 output "repository_endpoint" {
   description = "URL endpoint for the repository (use with pip)"
-  value       = "https://${aws_codeartifact_domain.domain.domain}-${aws_codeartifact_domain.domain.owner}.d.codeartifact.${data.aws_region.current.name}.amazonaws.com/pypi/${aws_codeartifact_repository.pypi.repository}/simple/"
+  value       = "https://${aws_codeartifact_domain.domain.domain}-${aws_codeartifact_domain.domain.owner}.d.codeartifact.${data.aws_region.current.id}.amazonaws.com/pypi/${aws_codeartifact_repository.pypi.repository}/simple/"
 }
 
 # Configuration Outputs
@@ -44,15 +44,15 @@ output "pip_config_instructions" {
       --output text)
 
     # 2. Configure pip to use CodeArtifact repository
-    pip config set global.index-url https://aws:$CODEARTIFACT_AUTH_TOKEN@${aws_codeartifact_domain.domain.domain}-${aws_codeartifact_domain.domain.owner}.d.codeartifact.${data.aws_region.current.name}.amazonaws.com/pypi/${aws_codeartifact_repository.pypi.repository}/simple/
+    pip config set global.index-url https://aws:$CODEARTIFACT_AUTH_TOKEN@${aws_codeartifact_domain.domain.domain}-${aws_codeartifact_domain.domain.owner}.d.codeartifact.${data.aws_region.current.id}.amazonaws.com/pypi/${aws_codeartifact_repository.pypi.repository}/simple/
 
     # Or use --index-url for a single install:
-    pip install --index-url https://aws:$CODEARTIFACT_AUTH_TOKEN@${aws_codeartifact_domain.domain.domain}-${aws_codeartifact_domain.domain.owner}.d.codeartifact.${data.aws_region.current.name}.amazonaws.com/pypi/${aws_codeartifact_repository.pypi.repository}/simple/ <package-name>
+    pip install --index-url https://aws:$CODEARTIFACT_AUTH_TOKEN@${aws_codeartifact_domain.domain.domain}-${aws_codeartifact_domain.domain.owner}.d.codeartifact.${data.aws_region.current.id}.amazonaws.com/pypi/${aws_codeartifact_repository.pypi.repository}/simple/ <package-name>
 
     # For poetry, add to pyproject.toml:
     [[tool.poetry.source]]
     name = "codeartifact"
-    url = "https://aws:$CODEARTIFACT_AUTH_TOKEN@${aws_codeartifact_domain.domain.domain}-${aws_codeartifact_domain.domain.owner}.d.codeartifact.${data.aws_region.current.name}.amazonaws.com/pypi/${aws_codeartifact_repository.pypi.repository}/simple/"
+    url = "https://aws:$CODEARTIFACT_AUTH_TOKEN@${aws_codeartifact_domain.domain.domain}-${aws_codeartifact_domain.domain.owner}.d.codeartifact.${data.aws_region.current.id}.amazonaws.com/pypi/${aws_codeartifact_repository.pypi.repository}/simple/"
     priority = "primary"
   EOT
 }
