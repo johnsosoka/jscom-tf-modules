@@ -1,5 +1,22 @@
 # jscom-tf-modules
 
+> **ARCHIVED** — This repository has been superseded by the modules in [sosoka-labs-infra](https://github.com/Sosoka-Labs/sosoka-labs-infra). All infrastructure is now managed under the Sosoka-Labs organization using Terragrunt. This repo is preserved for historical reference only.
+
+## Successor Modules
+
+| Legacy Module | Successor | Location |
+|---------------|-----------|----------|
+| `static-website` | `static-site` | [sosoka-labs-infra/modules/static-site](https://github.com/Sosoka-Labs/sosoka-labs-infra/tree/main/modules/static-site) |
+| `base-api` | `api-gateway` | [sosoka-labs-infra/modules/api-gateway](https://github.com/Sosoka-Labs/sosoka-labs-infra/tree/main/modules/api-gateway) |
+| `lambda-authorizer` | Replaced by Cognito JWT auth | [sosoka-labs-infra/modules/cognito-user-pool](https://github.com/Sosoka-Labs/sosoka-labs-infra/tree/main/modules/cognito-user-pool) |
+| `codeartifact-pypi` | Not migrated (unused) | — |
+
+The successor modules use OAC (Origin Access Control) instead of OAI, S3 native lockfiles instead of DynamoDB, and support multi-account zone delegation. See [sosoka-labs-infra](https://github.com/Sosoka-Labs/sosoka-labs-infra) for full documentation.
+
+---
+
+## Legacy Documentation
+
 Repository to house various jscom terraform modules.
 
 
